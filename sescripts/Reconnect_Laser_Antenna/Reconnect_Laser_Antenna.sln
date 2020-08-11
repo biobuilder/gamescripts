@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29409.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reconnect_Laser_Antenna", "Reconnect_Laser_Antenna\Reconnect_Laser_Antenna.csproj", "{B1E393C0-9D4A-4007-BDB6-3396850F848A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1E393C0-9D4A-4007-BDB6-3396850F848A}.Debug|x64.ActiveCfg = Debug|x64
+		{B1E393C0-9D4A-4007-BDB6-3396850F848A}.Debug|x64.Build.0 = Debug|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1796E9BC-AAEA-435A-ACDA-5CB1273804C5}
+	EndGlobalSection
+EndGlobal

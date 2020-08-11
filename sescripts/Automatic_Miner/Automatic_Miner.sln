@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29409.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automatic_Miner", "Automatic_Miner\Automatic_Miner.csproj", "{9175C511-F0EC-4985-A08C-AF0ED2C7E29D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9175C511-F0EC-4985-A08C-AF0ED2C7E29D}.Debug|x64.ActiveCfg = Debug|x64
+		{9175C511-F0EC-4985-A08C-AF0ED2C7E29D}.Debug|x64.Build.0 = Debug|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {57F8331D-EAE4-4F1A-A6C1-A27BE91D100F}
+	EndGlobalSection
+EndGlobal

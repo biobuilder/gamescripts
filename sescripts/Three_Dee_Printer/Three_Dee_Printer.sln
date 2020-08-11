@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29409.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Three_Dee_Printer", "Three_Dee_Printer\Three_Dee_Printer.csproj", "{B5307CE5-0DAB-4801-A91D-170F3B0DE3D5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B5307CE5-0DAB-4801-A91D-170F3B0DE3D5}.Debug|x64.ActiveCfg = Debug|x64
+		{B5307CE5-0DAB-4801-A91D-170F3B0DE3D5}.Debug|x64.Build.0 = Debug|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7EBD9427-78B2-413F-81D9-E5AF36097E89}
+	EndGlobalSection
+EndGlobal

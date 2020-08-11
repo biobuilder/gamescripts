@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29409.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rangefinder", "Rangefinder\Rangefinder.csproj", "{A6DEADA0-98CC-4AF9-A8C4-68B3BB1AC57F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6DEADA0-98CC-4AF9-A8C4-68B3BB1AC57F}.Debug|x64.ActiveCfg = Debug|x64
+		{A6DEADA0-98CC-4AF9-A8C4-68B3BB1AC57F}.Debug|x64.Build.0 = Debug|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0AEA097E-34F1-4B82-A2EB-2B5AFAA66FA9}
+	EndGlobalSection
+EndGlobal
