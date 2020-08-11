@@ -1,0 +1,48 @@
+// Walk upward pseudo code
+// Damon Printz
+// 1-27-2019
+
+Scratch all that.  Just use a timer-based jump up mechanism.
+
+Operator instructions
+1. Fill tanks with sufficient materials
+2. Set projection
+3. Unlock from base and turn on welders
+4. Set spinning rotor to about 1 - 2 RPM
+5. Begin build sequence
+
+Timer sequence
+Weld delay: 60 seconds
+ - Actions: increase thrust override (upward thruster blocks)
+ - Start thrust override delay timer
+Thrust override delay: 3-4 seconds
+ - Actions: remove thrust override (upward thruster blocks)
+ - Start weld timer block
+
+A sensor stops the weld head by disabling the Weld delay timer once the weld head reaches the end of the track
+
+
+Sensors list:
+1 sensor for the connector
+1 sensor for the top of the rail
+
+1 piston capable of extending up to 1 block per stroke
+
+If player enacts Restart/Connect sequence, the machine will:
+Turn off welders
+Check connector sensor for presence of connector block
+Take 1 step downward (Piston always starts and ends as retracted)
+ - Unlock bottom gear
+ - Lock top gear
+ - Extend piston
+ - Unlock top gear
+ - Lock bottom gear
+ - Retract piston
+Repeat until the sensor detects the connector block
+Release all landing gear
+Connect the connector block
+
+
+If player enacts Build sequence, the machine will:
+Release the connector block
+Check top sensor for End Detection
