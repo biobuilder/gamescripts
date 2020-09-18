@@ -35,6 +35,7 @@ Steps:
 import pyautogui
 import time
 import random
+#from PIL import Image
 
 # constants
 PASS = True
@@ -67,7 +68,8 @@ jump_home_stargate_sequence = [#'ivar_key.png',
                                ]
 
 asteroid_key_location = 'image_keys/asteroids/'
-target_asteroid_types = [#'omber.png',
+target_asteroid_types = [#'veldspar.png',
+                         #'omber.png',
                          #'plagioclase.png',
                          'scordite.png']
 
@@ -103,11 +105,12 @@ def is_icon_present(img_filepath):
 # undocks the ship from the hangar
 def undock():
     print('undocking')
-    unx = 905
-    uny = 219
-    pyautogui.moveTo(unx,uny)
-    pyautogui.click(unx,uny)
-    move_mouse_to_safe_spot()
+    click_on_icon('image_keys/undock_key.png')
+    #unx = 905
+    #uny = 219
+    #pyautogui.moveTo(unx,uny)
+    #pyautogui.click(unx,uny)
+    #move_mouse_to_safe_spot()
     time.sleep(15)
     return PASS
 
@@ -231,20 +234,22 @@ def warp_to_asteroids():
 # clicks the general navigation tab
 def click_general_tab():
     # select the general tab
-    pyautogui.moveTo(533,200)
-    pyautogui.click(533,200)
+    click_on_icon('image_keys/general_tab_key.png')
+    #pyautogui.moveTo(533,200)
+    #pyautogui.click(533,200)
     return PASS
 
 # clicks the mining navigation tab
 def click_mining_tab():
     # click the mining tab
-    pyautogui.moveTo(580,201)
-    pyautogui.click(580,201)
+    click_on_icon('image_keys/mining_tab_key.png')
+    #pyautogui.moveTo(580,201)
+    #pyautogui.click(580,201)
     return PASS
 
 # moves the mouse off of the screen to keep from opening dialogue boxes
 def move_mouse_to_safe_spot():
-    pyautogui.moveTo(10,10)
+    pyautogui.moveTo(80,10)
     return PASS
 
 # tries to keep the computer screen from going to sleep
@@ -264,8 +269,8 @@ def move_camera():
 
 # switches the filter icon 
 def switch_filter_icon():
-    pyautogui.moveTo(520,225)
-    pyautogui.click(520,225)
+    pyautogui.moveTo(520,230)
+    pyautogui.click(520,230)
     return PASS
 
 def lock_target():
@@ -274,7 +279,7 @@ def lock_target():
     click_mining_tab()
     
     # switch filter mode to Valuable Asteroids first
-    switch_filter_icon()
+    #switch_filter_icon()
 
     print('approaching target asteroid')    
     # find the best available asteroid in the list and lock onto it
@@ -287,7 +292,7 @@ def lock_target():
             break
     # lock onto the asteroid (but only if a valid lock was obtained)    
     if(val == None):
-        switch_filter_icon()
+        #switch_filter_icon()
         return FAIL
 
     # approach the asteroid
@@ -298,13 +303,21 @@ def lock_target():
     time.sleep(0.5)
     pyautogui.keyUp(APPROACH_KEY) # release the approach key
     move_mouse_to_safe_spot() # move the mouse out of the way
-    time.sleep(100) # wait until we get there
+    
+    # wait until we get to the asteroid then begin lock
+    for i in range(100):
+        val = pyautogui.locateCenterOnScreen('image_keys/asteroid_ready_key.png')
+        if(val != None):
+            break
+        time.sleep(1)
+    
+    #time.sleep(100) # wait until we get there
 
     print('targeting asteroid')    
     # find the selected asteroid in the list and lock onto it
     val = pyautogui.locateCenterOnScreen('image_keys/asteroid_locked_key.png')
     if(val == None):
-        switch_filter_icon()
+        #switch_filter_icon()
         return FAIL
     # lock onto the asteroid
     pyautogui.keyDown(LOCK_KEY) # hold down the target lock key
@@ -317,7 +330,7 @@ def lock_target():
     time.sleep(7) # wait for lock to finish
     
     # switch filter mode back to Asteroid Clusters
-    switch_filter_icon()
+    #switch_filter_icon()
     # move mouse out of the way 
     move_mouse_to_safe_spot()
     return PASS
@@ -330,9 +343,20 @@ def begin_mining():
     #pyautogui.press('f1')
     return PASS
 
+def toggle_shield_boosters():
+    print('shield boosting')
+    pyautogui.keyDown('alt')
+    pyautogui.press('f1')
+    pyautogui.press('f2')
+    pyautogui.keyUp('alt')
+    return PASS
 
 def is_hold_full():
-    return(is_icon_present('image_keys/is_hold_full_key.png'))
+    val = pyautogui.locateCenterOnScreen('image_keys/is_hold_full_key.png')
+    if(val == None):
+        return False
+    else:
+        return True
 
 def is_target_selected():
     return(is_icon_present('image_keys/is_target_selected_key.png'))
@@ -444,57 +468,16 @@ def reconnect_client():
     
     return PASS
 
+# checks to see if an an enemy is present on screen
+def is_enemy_present():
+    img = pyautogui.screenshot(region=(10,10,1029,1029))
+    for pixel in img.getdata():
+        if(pixel[0] > 200 and pixel[1] < 50 and pixel[2] < 50):
+            return True
+    return False
 
-
-
-
-
-
-"""
-# transfers inventory into the home system 
-def transfer_inventory_1():
-    print('transferring inventory')
-    # move mouse to inventory slot
-    invx = 26
-    invy = 271
-    pyautogui.moveTo(invx,invy)
-    pyautogui.click(invx,invy)
-
-    time.sleep(5)
-    # select ore hold
-
-    # grab the item from the storage box and put it in the hangar
-    # item location
-    itemx = 295
-    itemy = 343
-    # item hangar location
-    depositx = 156
-    deposity = 493
-    
-    for i in range(0,8,1):
-        pyautogui.moveTo(itemx,itemy)
-        pyautogui.mouseDown(itemx,itemy)
-        time.sleep(1)
-        pyautogui.moveTo(depositx,deposity)
-        #pyautogui.dragTo(depositx,deposity,duration=0.5)
-        time.sleep(1)
-        pyautogui.mouseUp(depositx,deposity)
-        # re-sort the box each time
-        pyautogui.moveTo(319,480)
-        pyautogui.click(319,480,button='right')
-        pyautogui.moveTo(381,518)
-        time.sleep(0.5)
-        pyautogui.moveTo(482,525)
-        time.sleep(0.5)
-        pyautogui.click(482,525)
-        
-    # close station inventory    
-    pyautogui.moveTo(invx,invy)
-    pyautogui.click(invx,invy)
-    move_mouse_to_safe_spot()
-    return PASS 
-"""
 # - - - - - - - - - - Begin Script - - - - - - - - -
+
 
 # add delay between actions
 pyautogui.PAUSE = PAUSE_AMOUNT
@@ -502,8 +485,8 @@ pyautogui.PAUSE = PAUSE_AMOUNT
 # initiate a run counter
 count = 0
 
-#transfer_inventory()
-"""
+
+
 # bot script 
 while(1==1):
 
@@ -524,8 +507,10 @@ while(1==1):
             print('unable to warp to asteroids')
 
     # we can only begin mining if we were able to warp to an asteroid field
-    if(check == PASS):    
-        
+    if(check == PASS):
+        toggle_shield_boosters() # protect ourselves
+        click_mining_tab()
+        switch_filter_icon()
         # perform the hold
         while(is_hold_full() == False):
             
@@ -550,6 +535,9 @@ while(1==1):
                 # jerk the mouse around to keep it awake
                 # wait for the mining equipment to do its job
                 time.sleep(60)
+        # once we're done mining in the field, switch back the filter icon        
+        click_mining_tab()
+        switch_filter_icon()
         
     
     # once the hold is full, warp back
@@ -572,15 +560,14 @@ while(1==1):
     else:
         print('docking procedure was not successful.')
         print('waiting for reconnect window')
-        time.sleep(60*3600)
+        time.sleep(2*3600) # wait up to two hours
         if(is_client_disconnected() == True):
             click_on_icon(restart_filepath+'quit_key.png')
             reconnect_client()
             jump_to_home_star_system()
             dock_to_home_station()
             transfer_inventory()
-"""
-    
+
 """
 for i in range(0,10,1):
     print(pyautogui.position())
