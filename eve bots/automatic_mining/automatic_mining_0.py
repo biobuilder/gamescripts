@@ -13,7 +13,7 @@ Steps:
     3. Warp to nearest asteroid belt
     4. Mine Minerals
      - Approach nearest asteroid
-     - Wait 30 seconds
+     - Wait until they are reached
      - Lock nearest asteroid
      - Wait 5 seconds
      - Begin mining with all lasers
@@ -26,11 +26,11 @@ Steps:
     7. Transfer item inventory to station
      - Open inventory
      - Grab item and drop into station inventory
-     - Right-click, sort/stack all items
      - Check to see if an item is still present in the inventory
      - If an item is still present, repeat
+    8. If the client has disconnected, attempt reconnecting after waiting
 
-@author: Damon
+@author: biobuilder
 """
 import pyautogui
 import time
@@ -105,14 +105,14 @@ def is_icon_present(img_filepath):
 # undocks the ship from the hangar
 def undock():
     print('undocking')
-    click_on_icon('image_keys/undock_key.png')
+    check = click_on_icon('image_keys/undock_key.png')
     #unx = 905
     #uny = 219
     #pyautogui.moveTo(unx,uny)
     #pyautogui.click(unx,uny)
     #move_mouse_to_safe_spot()
     time.sleep(15)
-    return PASS
+    return check
 
 def jump_to_target_star_system():
     print('jumping to target star system')
@@ -138,7 +138,7 @@ def jump_to_target_star_system():
 def jump_to_home_star_system():
     print('jumping to home star system')
     # select the general tab
-    click_general_tab()
+    check = click_general_tab()
     # find the correct dock gate on the screen
     for keys in jump_home_stargate_sequence:
         val = pyautogui.locateCenterOnScreen(stargate_key_location + keys, confidence=CONFIDENCE)
@@ -151,8 +151,10 @@ def jump_to_home_star_system():
             move_mouse_to_safe_spot()
             print('->'+keys)
             time.sleep(60)
-    
-    return PASS
+            check = PASS
+        else:
+            check = FAIL
+    return check
 
 # docks to the home system
 def dock_to_home_station():
@@ -495,8 +497,6 @@ while(1==1):
     
     if(check == PASS):
         check = jump_to_target_star_system()
-        if(check != PASS and is_client_disconnected() == True):
-            reconnect_client() 
                 
     if(check == PASS):
         for i in range(6):
@@ -542,13 +542,14 @@ while(1==1):
     
     # once the hold is full, warp back
     for i in range(6):
+        move_mouse_to_safe_spot()
         check = jump_to_home_star_system()
         if(check == PASS):
             break
         move_camera() # move the view to try and get a different position
         print('missed jump to home star system')
     
-    if(check==PASS):
+    if(check == PASS):
         # initiate docking procedure
         check = dock_to_home_station()
     
@@ -558,11 +559,18 @@ while(1==1):
         count += 1
         print('Cycle count = ' + str(count))
     else:
-        print('docking procedure was not successful.')
+        print('could not dock to home station')
+    
+    # check to see if client is disconnected
+    if(is_client_disconnected() == True):
         print('waiting for reconnect window')
         time.sleep(2*3600) # wait up to two hours
-        if(is_client_disconnected() == True):
-            click_on_icon(restart_filepath+'quit_key.png')
+        check = click_on_icon(restart_filepath+'quit_key.png')
+        if(check != True):
+            print('unable to quit and restart')
+            while(1==1):
+                time.sleep(1)
+        else:
             reconnect_client()
             jump_to_home_star_system()
             dock_to_home_station()
