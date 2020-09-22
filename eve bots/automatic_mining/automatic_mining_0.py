@@ -488,7 +488,6 @@ pyautogui.PAUSE = PAUSE_AMOUNT
 count = 0
 
 
-
 # bot script 
 while(1==1):
 
@@ -512,7 +511,7 @@ while(1==1):
         click_mining_tab()
         switch_filter_icon()
         # perform the hold
-        while(is_hold_full() == False):
+        while(is_hold_full() == False and is_client_disconnected() == False):
             
             # check to see if the system is currently locked onto a target
             if(is_target_selected() == False):
