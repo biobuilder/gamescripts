@@ -22,8 +22,10 @@ Configuration
  - base-side connector must have a specific name
  - 
 Initialization
-1. Get connector GPS coordinate and orientation, use as origin
+1. Get connector GPS coordinate and orientation, use as origin - compile the script while connected
 2. Generate docking coordinates
+3. Detach the merge blocks and convert to ship
+4. Run the argument "set X, Y, Z" to set the build coordinates
 */
 
 using Sandbox.Game.EntityComponents;
@@ -184,10 +186,10 @@ namespace IngameScript
                 //panel.WriteText(lcdText);
                 throw;
             }
-            //shipConnector = GridTerminalSystem.GetBlockWithName("Connector W") as IMyShipConnector;
-            var connectors = new List<IMyShipConnector>();
-            GridTerminalSystem.GetBlocksOfType(connectors, block => block.IsSameConstructAs(Me));
-            shipConnector = connectors[0];
+            shipConnector = GridTerminalSystem.GetBlockWithName("Connector W") as IMyShipConnector;
+            //var connectors = new List<IMyShipConnector>();
+            //GridTerminalSystem.GetBlocksOfType(connectors, block => block.IsSameConstructAs(Me));
+            //shipConnector = connectors[0];
             //remoteControl = GridTerminalSystem.GetBlockWithName("Remote Control W") as IMyRemoteControl;
             var remotes = new List<IMyRemoteControl>();
             GridTerminalSystem.GetBlocksOfType(remotes, block => block.IsSameConstructAs(Me));
@@ -196,10 +198,10 @@ namespace IngameScript
             var timers = new List<IMyTimerBlock>();
             GridTerminalSystem.GetBlocksOfType(timers, block => block.IsSameConstructAs(Me));
             timer = timers[0];
-            //panel = GridTerminalSystem.GetBlockWithName("LCD Panel W") as IMyTextPanel;
-            var panels = new List<IMyTextPanel>();
-            GridTerminalSystem.GetBlocksOfType(panels, block => block.IsSameConstructAs(Me));
-            panel = panels[0];
+            panel = GridTerminalSystem.GetBlockWithName("LCD Panel W") as IMyTextPanel;
+            //var panels = new List<IMyTextPanel>();
+            //GridTerminalSystem.GetBlocksOfType(panels, block => block.IsSameConstructAs(Me));
+            //panel = panels[0];
 
             // welders
             welders = new List<IMyShipWelder>();
@@ -221,8 +223,8 @@ namespace IngameScript
             myBuildVars = new BuildVariables(this)
             {
                 PrintSpeed = 2, // printing speed (m/s)
-                TraverseSpeed = 10, // traverse speed (m/s)
-                Tolerance = 0.25, // must be within 1/4 a meter to count
+                TraverseSpeed = 0.5, // traverse speed (m/s)
+                Tolerance = 0.75, // must be within 1/4 a meter to count
                 DockingDepth = 10, // 10 meter default docking depth
                 PassWidth = 7*2.5, // pass width of the welders in meters
                 ZStepSize = 2.5, // step size along z axis in meters
@@ -342,6 +344,7 @@ namespace IngameScript
             {
                 if (myBuildVars.OverallState == (int)BuildState.resume_weld)
                 {
+                    remoteControl.SetAutoPilotEnabled(true); // keep reenabling the remote control
                     // enter the massive state machine
                     switch (myBuildVars.WorkState)
                     {
@@ -712,8 +715,12 @@ namespace IngameScript
         // calculate the build origin (i.e. docking point)
         public void calculateDockingPoint(BuildVariables vars)
         { 
-            //Vector3D translation = Vector3D.Multiply(myBuildVars.BuildZaxis, myBuildVars.AutopilotOffset.Z);
-            Vector3D newSpot = Vector3D.Add(vars.BaseConnectorOrigin, vars.AutopilotOffset);
+            Vector3D translationz = Vector3D.Multiply(myBuildVars.BuildZaxis, myBuildVars.AutopilotOffset.Z);
+            Vector3D newSpot = Vector3D.Add(vars.BaseConnectorOrigin, translationz);
+            Vector3D translationx = Vector3D.Multiply(myBuildVars.BuildXaxis, myBuildVars.AutopilotOffset.X);
+            newSpot = Vector3D.Add(newSpot, translationx);
+            Vector3D translationy = Vector3D.Multiply(myBuildVars.BuildYaxis, myBuildVars.AutopilotOffset.Y);
+            newSpot = Vector3D.Add(newSpot, translationy);
             vars.DockingEndpoint = newSpot;
         }
 
@@ -730,7 +737,7 @@ namespace IngameScript
 
         public void checkInventory(List<IMyCargoContainer> cargoContainers, string myOutputText)
         {
-            IMyInventory myInventory;
+            //IMyInventory myInventory;
             foreach(IMyCargoContainer container in cargoContainers)
             {
                 // get inventory

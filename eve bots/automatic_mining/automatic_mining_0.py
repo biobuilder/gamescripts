@@ -55,27 +55,27 @@ CONFIDENCE = 0.9
 
 # sequences
 stargate_key_location = 'image_keys/stargates/'
-destination_stargate_sequence = [#'abudban_key.png'
+destination_stargate_sequence = ['abudban_key.png'
                                  #'ivar_key.png',
                                  #'trytedald_key.png'
-                                 'ameinaka_key.png'
+                                 #'ameinaka_key.png'
                                  ]
 
 jump_home_stargate_sequence = [#'ivar_key.png',
                                #'ameinaka_key.png',
-                               'malukker_key.png'
-                               #'rens_key.png'
+                               #'malukker_key.png'
+                               'rens_key.png'
                                ]
 
 asteroid_key_location = 'image_keys/asteroids/'
-target_asteroid_types = [#'veldspar.png',
-                         #'omber.png',
-                         #'plagioclase.png',
+target_asteroid_types = ['veldspar.png',
+                         'omber.png',
+                         'plagioclase.png',
                          'scordite.png']
 
 
 home_station_location = 'image_keys/home_stations/'
-home_station_key = 'malukker_i_republic_university_key.png'
+home_station_key = 'rens_vi_brutor_tribe_treasury_key.png' #malukker_i_republic_university_key.png'
 
 
 restart_filepath = 'image_keys/game_restart/'
@@ -308,9 +308,9 @@ def lock_target():
     
     # wait until we get to the asteroid then begin lock
     for i in range(100):
-        val = pyautogui.locateCenterOnScreen('image_keys/asteroid_ready_key.png')
-        if(val != None):
-            break
+        #val = pyautogui.locateCenterOnScreen('image_keys/asteroid_ready_key.png')
+        #if(val != None):
+        #    break
         time.sleep(1)
     
     #time.sleep(100) # wait until we get there
@@ -442,7 +442,7 @@ def reconnect_client():
     click_on_icon(restart_filepath+'close.png')
     time.sleep(10)
     
-    # click on the character
+    # click on the characterd
     click_on_icon(restart_filepath+'cad.png')
     time.sleep(30)
 
@@ -487,6 +487,7 @@ pyautogui.PAUSE = PAUSE_AMOUNT
 # initiate a run counter
 count = 0
 
+#toggle_inventory()
 
 # bot script 
 while(1==1):
@@ -574,6 +575,9 @@ while(1==1):
             jump_to_home_star_system()
             dock_to_home_station()
             transfer_inventory()
+
+
+
 
 """
 for i in range(0,10,1):
