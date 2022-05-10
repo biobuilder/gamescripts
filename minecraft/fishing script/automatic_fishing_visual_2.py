@@ -53,9 +53,9 @@ The time library is likely to be included by default
 
 # - - - - - - - - - - - Modify Here - - - - - - - - - -
 
-POLE_SLOT_START = 6     # starting fishing pole slot (must be >= 1 and <= 9)
-POLE_SLOT_END = 6       # ending fishing pole slot (must be >= 1 and <= 9)
-POLE_MAX_USES = 10000   # how many uses (casts) a pole has before it switches
+POLE_SLOT_START = 1     # starting fishing pole slot (must be >= 1 and <= 9)
+POLE_SLOT_END = 9       # ending fishing pole slot (must be >= 1 and <= 9)
+POLE_MAX_USES = 130     # how many uses (casts) a pole has before it switches
 
 # you can change where on your screen the script looks for a bobber
 # the program has no idea where the minecraft window is, so you need to put
@@ -63,8 +63,8 @@ POLE_MAX_USES = 10000   # how many uses (casts) a pole has before it switches
 # until you find your bobber
 # look at the "focus.png" screenshot in your script folder to see where 
 # the script is looking
-PICTURE_X = 375         # screenshot top left corner x screen coordinate
-PICTURE_Y = 600         # screenshot top left corner y screen coordinate
+PICTURE_X = 550         # screenshot top left corner x screen coordinate
+PICTURE_Y = 1025         # screenshot top left corner y screen coordinate
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
